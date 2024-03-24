@@ -40,7 +40,6 @@ import {
 } from '@formily/element-plus'
 import { createForm } from '@formily/core'
 import { FormProvider, createSchemaField } from '@formily/vue'
-import 'ant-design-vue/dist/reset.css'
 import { useRoute } from 'vue-router'
 import apiServer from '@/api/axios'
 import { ElMessage } from 'element-plus'
