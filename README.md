@@ -1,39 +1,14 @@
 # vue3-use-demo
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue3 + TS 中使用 formily 低代码 demo
 
-## Recommended IDE Setup
+## formily 相关依赖
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+参考：
 
-## Type Support for `.vue` Imports in TS
+1. [formily/vue](https://vue.formilyjs.org/)
+2. [JSON schema 渲染方式](https://vue.formilyjs.org/api/components/schema-field-with-schema.html#%E6%8F%8F%E8%BF%B0)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+```bash
+npm install --save @formily/core @formily/vue @formily/element-plus
 ```
