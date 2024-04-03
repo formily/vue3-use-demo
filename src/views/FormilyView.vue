@@ -1,6 +1,9 @@
 <template>
   <FormProvider :form="form">
     <SchemaField :schema="bidConfig.schema"> </SchemaField>
+    <!-- <Submit @submit="submit">submit</Submit> -->
+    <!-- <el-button @click="submit" type="primary">提交</el-button> -->
+    <!-- <Submit>提交</Submit> -->
   </FormProvider>
 </template>
 
@@ -36,8 +39,11 @@ import {
   FormDialog,
   FormDrawer,
   // Editable,
-  PreviewText
-} from '@formily/element-plus'
+  PreviewText,
+  Button
+  // } from '@formily/element-plus'
+} from '@niceone/formily-element-plus'
+
 import { createForm } from '@formily/core'
 import { FormProvider, createSchemaField } from '@formily/vue'
 import { useRoute } from 'vue-router'
@@ -82,7 +88,8 @@ const { SchemaField } = createSchemaField({
     // Editable,
     // 阅读态组件
 
-    PreviewText
+    Text: PreviewText,
+    Button
   }
 })
 
@@ -95,6 +102,13 @@ onBeforeMount(() => {
   console.log(bid, name)
   getConfigFromBid()
 })
+
+function submit() {
+  form.submit((values) => {
+    // 在这里处理表单提交逻辑，可以将 values 提交给后端或其他处理
+    console.log('Form submitted with values:', values)
+  })
+}
 
 async function getConfigFromBid() {
   try {
