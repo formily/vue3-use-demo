@@ -8,7 +8,15 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount, ref, toRefs } from 'vue'
+import { ElMessage } from 'element-plus'
+import {
+  createForm,
+  onFormValidateSuccess,
+  onFormValidateFailed,
+  onFormValuesChange
+} from '@formily/core'
+import { FormProvider, createSchemaField } from '@formily/vue'
 import {
   FormLayout,
   FormItem,
@@ -43,13 +51,18 @@ import {
   Button
   // } from '@formily/element-plus'
 } from '@niceone/formily-element-plus'
-
-import { createForm } from '@formily/core'
-import { FormProvider, createSchemaField } from '@formily/vue'
-import { useRoute } from 'vue-router'
 import apiServer from '@/api/axios'
-import { ElMessage } from 'element-plus'
 
+const props = withDefaults(
+  defineProps<{
+    configId: string
+  }>(),
+  {
+    configId: ''
+  }
+)
+
+const { configId } = toRefs(props)
 const { SchemaField } = createSchemaField({
   components: {
     // 布局组件
@@ -93,26 +106,53 @@ const { SchemaField } = createSchemaField({
   }
 })
 
-const route = useRoute()
-const { bid, name } = route.query
-const form = createForm()
+const emit = defineEmits(['confirm', 'validateFail', 'valuesChange'])
+const form = createForm({
+  // https://core.formilyjs.org/api/entry/form-effect-hooks
+  effects() {
+    onFormValidateFailed((form) => {
+      //   console.log('fail>>')
+      emit('validateFail', form.errors)
+    }),
+      onFormValidateSuccess((form) => {
+        // https://core.formilyjs.org/api/models/form
+        // console.log('success>>', form.values.name)
+        emit('confirm', form.values)
+      }),
+      onFormValuesChange((form) => {
+        emit('valuesChange', form.values)
+      })
+  }
+})
 const bidConfig: any = ref({})
 
+function submit() {
+  form.submit()
+}
+
+function reset() {
+  form.reset()
+}
+
+defineExpose({
+  submit,
+  reset,
+  form
+})
 onBeforeMount(() => {
-  console.log(bid, name)
   getConfigFromBid()
 })
 
-function submit() {
-  form.submit((values) => {
-    // 在这里处理表单提交逻辑，可以将 values 提交给后端或其他处理
-    console.log('Form submitted with values:', values)
-  })
-}
+// function submit() {
+//   form.submit((values) => {
+//     // 在这里处理表单提交逻辑，可以将 values 提交给后端或其他处理
+//     console.log('Form submitted with values:', values)
+//   })
+// }
 
 async function getConfigFromBid() {
   try {
-    const res: any = await apiServer.get(`/configList/detail/${bid}`)
+    const res: any = await apiServer.get(`/configList/detail/${configId.value}`)
     console.log('res /configList/detail/', res)
     if (res.code === 0) {
       let config = res?.data?.config
