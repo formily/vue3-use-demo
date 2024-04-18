@@ -1,8 +1,11 @@
 <template>
   <div>
+    <MyButton></MyButton>
     <el-button @click="verify">点击校验</el-button>
     <el-button @click="reset">重置</el-button>
     <el-button @click="getValue">获取值</el-button>
+    <!-- <FormilyView></FormilyView> -->
+    FormilyView
     <FormilyView
       ref="formilyViewRef"
       :configId="configId"
@@ -10,16 +13,19 @@
       @validateFail="validateFail"
       @valuesChange="valuesChange"
     />
+    1212
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import FormilyView from '../components/formily-comp/FormilyView.vue'
+// import FormilyView from '../components/formily-comp/FormilyView.vue'
+import { MyButton, FormilyView } from '@niceone/formily-comp'
 
 const route = useRoute()
-const { bid: configId } = route.query
+const { bid } = route.query
+const configId: string = bid as string
 const formilyViewRef = ref()
 
 const verify = () => {

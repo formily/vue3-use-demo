@@ -16,6 +16,7 @@
     "@formily/core": "^2.3.1",
     "@formily/element-plus": "^1.1.0-beta.1",
     "@formily/vue": "^2.3.1",
+    "@niceone/formily-comp": "^0.0.3",
     "@niceone/formily-element-plus": "^1.1.6",
     "axios": "^1.6.8",
     "element-plus": "^2.6.2",
